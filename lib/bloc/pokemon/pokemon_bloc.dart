@@ -10,11 +10,14 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
   PokemonBloc() : super(const PokemonInitialState()) {
 
     on<LoadPokemonEvent>((event, emit) async {
-
-      final url = Uri.https('pokeapi.co','api/v2/pokemon/${event.index}');
-      final response = await http.get(url);
-      final pokemon = PokeapiPokemonResponse.fromJson(response.body);
-      emit(LoadPokemonState(pokemon));
+      try {
+        final url = Uri.https('pokeapi.co','api/v2/pokemon/${event.index}');
+        final response = await http.get(url);
+        final pokemon = PokeapiPokemonResponse.fromJson(response.body);
+        emit(LoadPokemonState(pokemon)); 
+      } catch (e) {
+        print('Error $e');
+      }
     });
   }
 }

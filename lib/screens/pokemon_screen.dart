@@ -29,8 +29,13 @@ class PokemonScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.network(state.pokemon!.sprites.frontDefault),
-                        Image.network(state.pokemon!.sprites.frontShiny),
+                        state.pokemon!.sprites.frontDefault == null
+                        ? const Icon(Icons.catching_pokemon_rounded, color: Colors.grey,)
+                        : Image.network(state.pokemon!.sprites.frontDefault!),
+                        
+                        state.pokemon!.sprites.frontShiny == null
+                        ? const Icon(Icons.catching_pokemon_rounded, color: Colors.grey)
+                        : Image.network(state.pokemon!.sprites.frontShiny!),
                       ],
                     ),
 
