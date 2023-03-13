@@ -26,14 +26,26 @@ class PokemonScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    (state.pokemon!.sprites.other!.officialArtwork.frontDefault == null)
+                    ? const Text(
+                      'sin imagen oficial disponible',
+                      style: TextStyle(
+                        fontSize: 20
+                      ),
+                    )
+                    : SizedBox(
+                      height: 200,
+                      child: Image.network(state.pokemon!.sprites.other!.officialArtwork.frontDefault!)
+                    ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        state.pokemon!.sprites.frontDefault == null
+                        (state.pokemon!.sprites.frontDefault == null)
                         ? const Icon(Icons.catching_pokemon_rounded, color: Colors.grey,)
                         : Image.network(state.pokemon!.sprites.frontDefault!),
                         
-                        state.pokemon!.sprites.frontShiny == null
+                        (state.pokemon!.sprites.frontShiny == null)
                         ? const Icon(Icons.catching_pokemon_rounded, color: Colors.grey)
                         : Image.network(state.pokemon!.sprites.frontShiny!),
                       ],
@@ -52,7 +64,7 @@ class PokemonScreen extends StatelessWidget {
                       ),
                     ),  
 
-                    state.pokemon!.types.length == 1
+                    (state.pokemon!.types.length == 1)
                     ? Text(
                         'Tipo: ${state.pokemon!.types[0].type.name}',
                         style: const TextStyle(
@@ -65,6 +77,13 @@ class PokemonScreen extends StatelessWidget {
                           fontSize: 20
                         ),
                       ),
+
+                    Text(
+                      'Peso: ${(state.pokemon!.weight/10)} Kg',
+                      style: const TextStyle(
+                        fontSize: 20
+                      ),
+                    ), 
 
                   ],
                 ),
