@@ -12,23 +12,27 @@ class HomeScreen extends StatelessWidget {
 
     BlocProvider.of<HomeBloc>(context).add(LoadPokemonListEvent());
     
-    return SafeArea(
-      top: true,
-      bottom: true,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Pokedex - PokeApi'),
-          centerTitle: true,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.search_rounded),
-              onPressed: () => showSearch( context: context, delegate: SearchProvider()), 
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+      return Container(
+        color: Colors.lightBlue,
+        child: SafeArea(
+          top: true,
+          bottom: true,
+          child: Scaffold(
+            appBar: AppBar(
+              title: const Text('Pokedex - PokeApi'),
+              centerTitle: true,
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.search_rounded),
+                  onPressed: state.loading 
+                  ? null
+                  :() => showSearch( context: context, delegate: SearchProvider()), 
+                ),
+              ],
             ),
-          ],
-        ),
-        body: BlocBuilder<HomeBloc, HomeState>(
-          builder: (context, state) {
-            return state.loading 
+            body: state.loading 
             ?const Center(
               child: CircularProgressIndicator.adaptive(),
             )
@@ -51,9 +55,11 @@ class HomeScreen extends StatelessWidget {
                   },
                 );
               },
-            );
-          })
-      ),
+            )
+          ),
+        ),
+      );
+    },
     );
   }
 }
